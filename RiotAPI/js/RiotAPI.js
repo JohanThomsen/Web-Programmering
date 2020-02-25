@@ -23,6 +23,7 @@ async function getSummonerInfo(SummonerName, champName){
   let rankedResult       = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerData.id}?api_key=${APIKey}`);
       rankedData         = await rankedResult.json();
   //  console.log(rankedData);
+
   if (champName) {
     let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&queue=420&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
@@ -65,8 +66,8 @@ getSummonerInfo('Truly Thomas')
   document.getElementById("summonerName").innerHTML = `${summonerData.name}`;
 
   document.getElementById("rankBlock").innerHTML = ` <p>Rank: ${rankedData[rankedIndex].tier} ${rankedData[rankedIndex].rank} ${rankedData[rankedIndex].leaguePoints} LP</p>`
-  document.getElementById("lvlBlock").innerHTML  = ` <p>Level: ${summonerData.summonerLevel} </p>`
-  //Add Winrate
+  document.getElementById("lvlBlock").innerHTML = ` <p>Level: ${summonerData.summonerLevel} </p>`
+  document.getElementById("winrateBlock").innerHTML = ` <p>Winrate: ${(rankedData[rankedIndex].wins / (rankedData[rankedIndex].losses + rankedData[rankedIndex].wins)) * 100}%</p>`
 })
 .catch(ErrorCode => {
 console.log(`Øv fejlkode (${ErrorCode})`);
