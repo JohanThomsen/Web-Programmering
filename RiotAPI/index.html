@@ -24,18 +24,20 @@
   </div>
 
   <div id = "filterSelect">
-    <form action="js/RiotAPI.js" id = "formFilterSelect">
+    <form id = "formFilterSelect" method ="GET">
       <input type="radio" id="soloQ" name="queue" value="RANKED_SOLO_5x5">
       <label for="soloQ">Solo Queue</label><br>
       <input type="radio" id="flexQ" name="queue" value="RANKED_SOLO_5x5">
       <label for="flecQ">Flex Queue</label><br>
       <input type="radio" id="all" name="queue" value="">
-      <label for="all">All games</label>
+      <label for="all">All games</label> <br>
 
       <label for="champName">Specific Champion</label><br>
       <input type="text" id="champName" name="champName"><br>
+      <label for="summonerName">Summoner Name</label><br>
+      <input type="text" id="summonerNameInput" name="summonerName"><br>
 
-      <input type="submit" value="Search">
+      <input type="button" name = "submit" value="Search" onclick="inputFilterData()">
     </form>
   </div>
 
