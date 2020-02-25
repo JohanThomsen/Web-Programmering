@@ -8,17 +8,38 @@
     <script defer src="js/RiotAPI.js"></script>
   </head>
   <body>
-    <h1 id="summonerName" class="bigHeader"></h1>
+    <h1 id="summonerName" class="bigHeader">Loading...</h1>
   </body>
+
   <div id = "ranklvlBlock">
     <div id = "rankBlock">
-        
+        <p> League Tier LP</p>
     </div>
     <div id = "lvlBlock">
-
+        <p> Level</p>
     </div>
     <div id = "winrateBlock">
-        
+        <p>Winrate</p>
     </div>
+  </div>
+
+  <div id = "filterSelect">
+    <form action="js/RiotAPI.js" id = "formFilterSelect">
+      <input type="radio" id="soloQ" name="queue" value="RANKED_SOLO_5x5">
+      <label for="soloQ">Solo Queue</label><br>
+      <input type="radio" id="flexQ" name="queue" value="RANKED_SOLO_5x5">
+      <label for="flecQ">Flex Queue</label><br>
+      <input type="radio" id="all" name="queue" value="">
+      <label for="all">All games</label>
+
+      <label for="champName">Specific Champion</label><br>
+      <input type="text" id="champName" name="champName"><br>
+
+      <input type="submit" value="Search">
+    </form>
+  </div>
+
+  <div id = "outsideMatchBox">
+    
   </div>
 </html>

@@ -50,7 +50,7 @@ async function getSummonerInfo(SummonerName, champName){
     console.log(matchDataArr);  
 }
 
-getSummonerInfo('Truly Thomas')
+getSummonerInfo('FroggenCosplayer')
 .then(() => {
   let rankedIndex = -1;
   if(rankedData[0].queueType === "RANKED_SOLO_5x5"){
@@ -70,5 +70,10 @@ getSummonerInfo('Truly Thomas')
   document.getElementById("winrateBlock").innerHTML = ` <p>Winrate: ${(rankedData[rankedIndex].wins / (rankedData[rankedIndex].losses + rankedData[rankedIndex].wins)) * 100}%</p>`
 })
 .catch(ErrorCode => {
-console.log(`Øv fejlkode (${ErrorCode})`);
+  console.log(`Øv fejlkode (${ErrorCode})`);
+  document.getElementById("summonerName").innerHTML = `Loading Failed. Error : (${ErrorCode})`;
 });
+
+
+//      <label for="champName">Specific Champion</label><br>
+//<input type="text" id="champName" name="champName"><br>
