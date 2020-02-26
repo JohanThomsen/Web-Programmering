@@ -13,6 +13,7 @@ console.log(weekAgo);
 
 async function getSummonerInfo(SummonerName, queueKey, champName){
   GchampName = champName;
+  console.log(SummonerName, queueKey, champName);
 
   let championsResult    = await fetch(`../Champions.json`);
       championsData      = await championsResult.json();
@@ -25,15 +26,19 @@ async function getSummonerInfo(SummonerName, queueKey, champName){
   //  console.log(rankedData);
 
   if (champName && queueKey) {
+    console.log("Have both");
     let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&queue=${queueKey}&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   } else if (!champName && queueKey){
+    console.log("Have queue");
     let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?queue=${queueKey}&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   } else if (champName && !queueKey){
+    console.log("Have champ");
     let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   } else {
+    console.log("Have none");
     let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   }
@@ -87,7 +92,7 @@ function inputFilterData(){
   let queueKey = queueSearch(searchFilter.queueSearch);
   console.log(queueKey);
 
-  getSummonerInfo(`${searchFilter.champSearch}`, queueKey, `${searchFilter.champSearch}`)
+  getSummonerInfo(`${searchFilter.summonerNameSearch}`, queueKey, `${searchFilter.champSearch}`)
   console.log(searchFilter);
 }
 
