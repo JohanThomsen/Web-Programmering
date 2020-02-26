@@ -20,6 +20,7 @@ async function getSummonerInfo(SummonerName, queueKey, champName){
   //  console.log(championsData);
   let summonerResult     = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${SummonerName}?api_key=${APIKey}`);
       summonerData       = await summonerResult.json();
+      console.log(summonerData);
   //  console.log(summonerData);
   let rankedResult       = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerData.id}?api_key=${APIKey}`);
       rankedData         = await rankedResult.json();
@@ -27,38 +28,37 @@ async function getSummonerInfo(SummonerName, queueKey, champName){
 
   if (champName && queueKey) {
     console.log("Have both");
-    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&queue=${queueKey}&beginTime=${weekAgo}&api_key=${APIKey}`);
+    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&queue=${queueKey}&endIndex=10&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   } else if (!champName && queueKey){
     console.log("Have queue");
-    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?queue=${queueKey}&beginTime=${weekAgo}&api_key=${APIKey}`);
+    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?queue=${queueKey}&endIndex=10&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   } else if (champName && !queueKey){
     console.log("Have champ");
-    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&beginTime=${weekAgo}&api_key=${APIKey}`);
+    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?champion=${championsData.data[champName].key}&endIndex=10&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   } else {
     console.log("Have none");
-    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?beginTime=${weekAgo}&api_key=${APIKey}`);
+    let matchHistoryResult = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?endIndex=10&beginTime=${weekAgo}&api_key=${APIKey}`);
     matchHistoryData       = await matchHistoryResult.json();
   }
   
-  //  console.log(matchHistoryData)
-  if (matchHistoryData.totalGames > 10) {
+    console.log(matchHistoryData)
+  if (matchHistoryData.totalGames >= 10) {
     numberOfGames = 10; 
   } else {
     numberOfGames = matchHistoryData.totalGames;
   }
   let matchDataArr = [];
   for (let i = 1; i <= numberOfGames; i++) {
-    let matchIndex    = matchHistoryData.totalGames - i;
     console.log(matchIndex);
-    let matchResult   = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matches/${matchHistoryData.matches[matchIndex].gameId}?api_key=${APIKey}`);
+    let matchResult   = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matches/${matchHistoryData.matches[i].gameId}?api_key=${APIKey}`);
     let matchData     = await matchResult.json();
     matchDataArr.push(matchData);
   }
   
-    console.log(matchDataArr);  
+    console.log(matchDataArr);
 }
 
 getSummonerInfo('FroggenCosplayer')
