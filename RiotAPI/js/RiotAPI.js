@@ -1,7 +1,7 @@
 //'use strict'
 
 const TIMEINWEEK = 604000000;
-let APIKey = 'RGAPI-ba7dfaff-56b6-4ef1-80e5-c6a655e09984';
+let APIKey = 'RGAPI-a8d5bb38-4bcc-4c64-bcc5-945c8929084f';
 let summonerData, rankedData, matchHistoryData, championsData, GchampName;
 //let matchDataArr = [];
 let tempDate = new Date();
@@ -15,6 +15,8 @@ async function getSummonerInfo(SummonerName, queueKey, champName){
   GchampName = champName;
   console.log(SummonerName, queueKey, champName);
 
+  //let test = await fetch(`http://localhost:3001`)
+  //console.log(test);
   let championsResult    = await fetch(`../Champions.json`);
       championsData      = await championsResult.json();
   //  console.log(championsData);
@@ -51,8 +53,8 @@ async function getSummonerInfo(SummonerName, queueKey, champName){
     numberOfGames = matchHistoryData.totalGames;
   }
   let matchDataArr = [];
-  for (let i = 1; i <= numberOfGames; i++) {
-    console.log(matchIndex);
+  for (let i = 0; i < numberOfGames; i++) {
+    console.log(i);
     let matchResult   = await fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matches/${matchHistoryData.matches[i].gameId}?api_key=${APIKey}`);
     let matchData     = await matchResult.json();
     matchDataArr.push(matchData);
